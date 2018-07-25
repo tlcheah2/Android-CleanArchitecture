@@ -14,13 +14,19 @@ import com.fernandocejas.android10.sample.presentation.internal.di.HasComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.DaggerUserComponent;
 import com.fernandocejas.android10.sample.presentation.internal.di.components.UserComponent;
 import com.fernandocejas.android10.sample.presentation.model.UserModel;
+import com.fernandocejas.android10.sample.presentation.presenter.UserListPresenter;
 import com.fernandocejas.android10.sample.presentation.view.fragment.UserListFragment;
+
+import javax.inject.Inject;
 
 /**
  * Activity that shows a list of Users.
  */
 public class UserListActivity extends BaseActivity implements HasComponent<UserComponent>,
     UserListFragment.UserListListener {
+
+  @Inject
+  UserListPresenter userListPresenter;
 
   public static Intent getCallingIntent(Context context) {
     return new Intent(context, UserListActivity.class);
@@ -37,6 +43,7 @@ public class UserListActivity extends BaseActivity implements HasComponent<UserC
     if (savedInstanceState == null) {
       addFragment(R.id.fragmentContainer, new UserListFragment());
     }
+    userListPresenter.initialize();
   }
 
   private void initializeInjector() {
